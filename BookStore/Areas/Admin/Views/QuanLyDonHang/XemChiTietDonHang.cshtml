@@ -1,0 +1,217 @@
+﻿@using BookStore.Models
+@model DonHang
+@{
+    ViewBag.Title = "XemChiTietDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<body>
+    <h2>Thông Tin Đơn Hàng: @Model.KhachHang.HoTen</h2>
+    @using (Html.BeginForm())
+    {
+        <div class="tblChiTietDonHang table">
+            @{IEnumerable<ChiTietDonHang> lstChiTietDH = (IEnumerable<ChiTietDonHang>)ViewBag.listchitietdonhang;}
+            <table class="table">
+                @*Phần thông tin đơn hàng*@
+                <tr>
+                    <td colspan="4">
+                        <table style="width:100%">
+                            <tr>
+                                <td>Mã Đơn Hàng: <b style="color:red">@Model.MaDonHang @Html.Hidden("MaDonHang", Model.MaDonHang)</b></td>
+                                <td>Tài Khoản Khách Hàng: <b style="color:red">@Model.KhachHang.TaiKhoan</b></td>
+
+                                <td>Ngày Đặt Hàng Hàng: <b style="color:red">@Model.NgayDat.Value.ToString("dd-yy-MMMM")</b></td>
+
+
+                                @switch (Model.TinhTrangGiaoHang)
+                                {
+                                    case 0:
+                                        <td>Tình Trạng: <b style="color:red">Chờ Xác Nhận</b></td>
+                                        ; break;
+                                    case 1:
+                                        <td>Tình Trạng: <b style="color:red"></b> Đang Giao</td>
+                                        ; break;
+                                    case 2:
+                                        <td>Tình Trạng: <b style="color:red">Đã Giao</b></td>
+                                        ; break;
+                                    case 3:
+                                        <td>Tình Trạng: <b style="color:red">Đã Hủy</b></td>
+                                        ; break;
+                                
+
+                                }
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align:center">Địa Chỉ Giao Hàng: <b style="color:red">@Model.KhachHang.DienThoai</b> | <b style="color:red">@Model.KhachHang.DiaChi</b> | <b style="color:red"> email: @Model.KhachHang.Email</b></td>
+                </tr>
+                <tr style="background:#f8f9fa">
+                    <td colspan="4" style="text-align:center"></td>
+                </tr>
+                <tr>
+                    <td width="25%">Sản Phẩm</td>
+                    <td width="25%">Hình Ảnh</td>
+                    @if (Model.TinhTrangGiaoHang == 2)
+                    {
+                        // bỏ trống số lượng đặt và đơn giá
+                        @*<td width="25%">Số Lượng Đặt</td>
+                            <td width="25%">Đơn Giá</td>*@
+                    }
+                    else
+                    {
+                        <td width="25%">Số Lượng Đặt</td>
+                        <td width="25%">Đơn Giá</td>
+                    }
+
+                </tr>
+                @foreach (var item in lstChiTietDH)
+                {
+            <tr>
+                <td style="vertical-align:middle">@item.Sach.TenSach</td>
+                <td style="vertical-align:middle"><img src="~/Assets/HinhAnhSP/@item.Sach.AnhBia" width="80" height="90" /></td>
+                @if (Model.TinhTrangGiaoHang == 2)
+                {
+                    // bỏ trống sl và đơn giá
+                    //<td style="vertical-align:middle">@item.SoLuongMua</td>
+                    //<td style="vertical-align:middle">@string.Format("{0:0,#}", item.tblSach.GiaBan * item.SoLuongMua) vnđ</td>
+                }
+                else
+                {
+                    <td style="vertical-align:middle">@item.SoLuong</td>
+                    <td style="vertical-align:middle">@string.Format("{0:0,#}", item.Sach.GiaBan * item.SoLuong) vnđ</td>
+                }
+
+            </tr>
+                }
+                @if (Model.TinhTrangGiaoHang == 2)
+                {
+                    // bỏ trống sl sách đặt và tổng tiền
+                    @*<tr>
+                            <td style="text-align:right" colspan="4">Tổng Số Lượng: <b style="color:red">@Model.tblChiTietDonHangs.Sum(n => n.SoLuongMua)</b> Cuốn</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right" colspan="4">Tổng Tiền: <b style="color:red">@Model.tblChiTietDonHangs.Sum(n => n.tblSach.GiaBan * n.SoLuongMua).Value.ToString("#,##")</b> vnđ</td>
+                        </tr>*@
+                }
+                else
+                {
+                    <tr>
+                        <td style="text-align:right" colspan="4">Tổng Số Lượng: <b style="color:red">@Model.ChiTietDonHangs.Sum(n => n.SoLuong)</b> Cuốn</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right" colspan="4">Tổng Tiền: <b style="color:red">@Model.ChiTietDonHangs.Sum(n => n.Sach.GiaBan * n.SoLuong).Value.ToString("#,##")</b> vnđ</td>
+                    </tr>
+                }
+            </table>
+            <input type="button" value="In Đơn Hàng" id="btnInDonHang" />
+
+            @*<input type="submit" value="Lưu Đơn Hàng" id="btnInDonHang">*@
+
+        </div>
+    }
+</body>
+<div style="display:none">
+    <h2>Thông Tin Đơn Hàng In</h2>
+    @using (Html.BeginForm())
+    {
+        <div class="tblChiTietDonHang table">
+            @{IEnumerable<ChiTietDonHang> lstChiTietDH = (IEnumerable<ChiTietDonHang>)ViewBag.listchitietdonhang;}
+            <table class="table" id="table">
+                @*Phần thông tin đơn hàng*@
+                <tr>
+                    <td colspan="4">
+                        <table style="width:100%">
+                            <tr>
+                                <td>Mã Đơn Hàng: @Model.MaDonHang @Html.Hidden("MaDonHang", Model.MaDonHang)</td>
+                                <td>Tên Người Nhận: @Model.KhachHang.TaiKhoan</td>
+
+                                <td>Ngày Đặt Hàng: @Model.NgayDat.Value.ToString("dd-yy-MMMM")</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align:center">Địa Chỉ Giao Hàng: <b style="color:red">@Model.KhachHang.DienThoai</b> | <b style="color:red">@Model.KhachHang.DiaChi</b> | <b style="color:red">@Model.KhachHang.Email</b></td>
+                </tr>
+                <tr style="background:#f8f9fa">
+                    <td colspan="4" style="text-align:center"></td>
+                </tr>
+                <tr>
+                    <td width="25%">Sản Phẩm</td>
+
+                    @if (Model.TinhTrangGiaoHang == 2)
+                    {
+                        // bỏ trống số lượng đặt và đơn giá
+                        @*<td width="25%">Số Lượng Đặt</td>
+                            <td width="25%">Đơn Giá</td>*@
+                    }
+                    else
+                    {
+                        <td width="25%">Số Lượng Đặt</td>
+                        <td width="25%">Đơn Giá</td>
+                    }
+
+                </tr>
+                @foreach (var item in lstChiTietDH)
+                {
+                    <tr>
+                        <td style="vertical-align:middle">@item.Sach.TenSach</td>
+
+                        @if (Model.TinhTrangGiaoHang == 2)
+                        {
+                            // bỏ trống sl và đơn giá
+                            //<td style="vertical-align:middle">@item.SoLuongMua</td>
+                            //<td style="vertical-align:middle">@string.Format("{0:0,#}", item.tblSach.GiaBan * item.SoLuongMua) vnđ</td>
+                        }
+                        else
+                        {
+                            <td style="vertical-align:middle">@item.SoLuong</td>
+                            <td style="vertical-align:middle">@string.Format("{0:0,#}", item.Sach.GiaBan * item.SoLuong) vnđ</td>
+                        }
+
+                    </tr>
+                }
+                @if (Model.TinhTrangGiaoHang == 2)
+                {
+                    // bỏ trống sl sách đặt và tổng tiền
+                    @*<tr>
+                            <td style="text-align:right" colspan="4">Tổng Số Lượng: <b style="color:red">@Model.tblChiTietDonHangs.Sum(n => n.SoLuongMua)</b> Cuốn</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right" colspan="4">Tổng Tiền: <b style="color:red">@Model.tblChiTietDonHangs.Sum(n => n.tblSach.GiaBan * n.SoLuongMua).Value.ToString("#,##")</b> vnđ</td>
+                        </tr>*@
+                }
+                else
+                {
+                    <tr>
+                        <td style="text-align:right" colspan="4">Tổng Số Lượng: @Model.ChiTietDonHangs.Sum(n => n.SoLuong) Cuốn</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right" colspan="4">Tổng Tiền: @Model.ChiTietDonHangs.Sum(n => n.Sach.GiaBan * n.SoLuong).Value.ToString("#,##") vnđ</td>
+                    </tr>
+                }
+            </table>
+
+
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $("#btnInDonHang").click(function () {
+        var content = '<table>' + $("#table").html() + '</table>';
+        InDonHang(content);
+    });
+    function InDonHang(content) {
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title>In Đơn Hàng</title>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(content);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+</script>

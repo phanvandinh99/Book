@@ -1,0 +1,180 @@
+﻿@using BookStore.Models
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/Assets/HinhAnhSP/Anhlogoweb.jpeg" />
+    @*Chen link css*@
+
+    <link href="~/Assets/Content/NguoiDungCssLayout/fonts.css" rel="stylesheet" />
+    <link href="~/Assets/Content/NguoiDungCssLayout/screen.css" rel="stylesheet" />
+    @*Chen css thiet ke *@
+    <link href="~/Assets/Content/NguoiDungCssLayout/NguoiDungCssLayout.css" rel="stylesheet" />
+    @*Chen fort ky tu *@
+    <link href="~/Assets/Content/fortawesome/css/font-awesome.min.css" rel="stylesheet" />
+    @*Chèn link nivo slider*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Assets/NivoSlider/nivo-slider.css" rel="stylesheet" />
+    <script src="~/Assets/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Assets/NivoSlider/jquery.nivo.slider.js"></script>
+    <script src="~/Assets/NivoSlider/jquery.nivo.slider.pack.js"></script>
+    @*    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">*@
+</head>
+
+<body>
+    <div>
+
+        <section class="blank">
+            <div class="flash">
+                <div class="icDienThoai">
+                    <i class="fa fa-phone"></i>
+                    &nbsp;
+                    <i class="fa fa-facebook"></i>
+                </div>
+                <div class="DangKyDangNhap">
+                    @Html.Action("GioHangPartial", "GioHang")
+                    <i>&nbsp;</i>
+                    @if (Session["TaiKhoan"] != null)
+                    {
+                        KhachHang kh = (KhachHang)Session["TaiKhoan"];
+                        <i class="icon-signin"></i>
+                        <i>&nbsp;| </i>
+                        <i class="icon-signin"></i>
+                        @Html.ActionLink("Đăng Xuất", "DangXuat", "NguoiDung")
+                        <i>&nbsp;| </i>
+                        <b>Xin chào: @kh.HoTen</b>
+                        @Html.ActionLink("Đơn Hàng", "XemGioHangSauKhiMua", "GioHang", new { @id = kh.MaKhachHang }, null);
+                    }
+                    else
+                    {
+                        <i class="icon-signin"></i>
+                        @Html.ActionLink("Đăng ký", "DangKy", "NguoiDung", null, htmlAttributes: new { @class = "DangKy" })
+                        <i class="icon-unlock"></i>
+                        @Html.ActionLink("Đăng nhập", "DangNhap", "NguoiDung", null, htmlAttributes: new { @class = "DangNhap" })
+                    }
+                </div>
+            </div>
+            @*Menu header*@
+            <div class="flash success" id="divDanhMuc">
+                @*Hộp thoại tìm kiếm*@
+                <div id="txtTimKiem">
+                    @using (Html.BeginForm("KetQuaTimKiem", "TimKiem", FormMethod.Post))
+                    {
+                        @Html.TextBox("txtTimKiem", "", htmlAttributes: new { @class = "TextBoxTimKiem", @placeholder = "Nhập vào từ khóa cần tìm ..." })
+                        @*Chèn vào image button hình ảnh*@
+                        <div id="divHinhAnhTimKiem">
+                            <button type="submit"><i class="icon-search"></i> </button>
+                        </div>
+                    }
+                </div>
+                @*Menu bên phải header*@
+                <ul class="navMenu">
+                    <li>
+                        <a href="@Url.Action("Index","Home")">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="~/Customer/Home/GioiThieu">Giới thiệu</a>
+                    <li>
+                        <a href="~/Customer/Home/LienHe">Liên Hệ</a>
+                    </li>
+                    <li>
+                        <a href="~/Customer/Home/HuongDan">Hướng Dẫn</a>
+                    </li>
+
+
+
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            @*Div menu bên trái *@
+            <div id="divMenuLeft">
+                @*Chèn vào partial view sách mới*@
+                <div class="activity">
+                    @Html.Action("SachMoiPartial", "Sach")
+                    @*Chèn vào partial view sách mới*@
+
+
+                </div>
+            </div>
+            @*Chèn div nivoslider*@
+            <div id="slider" class="nivoSlider">
+                <img src="~/Assets/HinhAnh/8.jpg" />
+                <img src="~/Assets/HinhAnh/Anh1.png" />
+                <img src="~/Assets/HinhAnh/8.jpg" />
+                <img src="~/Assets/HinhAnh/Anh2.png" />
+                <img src="~/Assets/HinhAnh/Anh3.png" />
+
+
+            </div>
+            <div style="clear:both"></div>
+        </section>
+        @*div body*@
+        <div id="NoiDung">
+            @RenderBody()
+        </div>
+        @*Pan chu de*@
+        <section>
+            <div>
+                @Html.Action("ChuDePartial", "ChuDe")
+            </div>
+
+        </section>
+        @*Dev nha xuat ban*@
+        <section class="blank items">
+            <div id="divLeft">
+                <div class="item">
+                    <img src="~/Assets/HinhAnh/4.jpg" />
+                    <div class="item-info" id="divNhaXuatBan">
+                        @*Action partialview*@
+                        @Html.Action("NhaXuatBanPartial", "NhaXuatBan")
+
+                    </div>
+
+                </div>
+            </div>
+            <div id="divRight">
+                @RenderSection("NoiDungBenPhai", false)
+            </div>
+        </section>
+    </div>
+
+    <div>
+        <a href="#" class="button button-buy">Chào mừng bạn đến với trang web Giới thiệu sách của chúng tôi</a>
+    </div>
+
+
+
+    <div class="footer" style="background-color: #e7e7e7; text-align: center; padding-top: 20px">
+        @Html.ActionLink("CHÍNH SÁCH BẢO MẬT", "ChinhSachBaoMat", "Home") &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+        @Html.ActionLink("CHÍNH SÁCH KHÁCH MUA SỈ", "ChinhSachMuaSi", "Home") &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+        @Html.ActionLink("CHÍNH SÁCH VẬN CHUYỂN", "ChinhSachVanChuyen", "Home") &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+        @Html.ActionLink("CHÍNH SÁCH TRẢ HÀNG HOÀN TIỀN", "ChinhSachDoiTra", "Home")
+
+        <div class="center">
+            <a href="http://online.gov.vn/Home/WebDetails/5452">
+                <img class="ty-pict cm-image" id="det_img_1618915505" src="https://nhasachphuongnam.com/images/promo/126/bo-cong-thuong-130x87_new1.png" alt="" title="">
+                <noscript><img class=" cm-image" src="https://nhasachphuongnam.com/images/promo/126/bo-cong-thuong-130x87_new1.png" width=121 height=60 alt="" title="" /></noscript>
+            </a>
+        </div>
+        <b>Công ty TNHH Phương Nam</b>
+        <div class="_1c2Tz5">Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành phố Hà Nội, Việt Nam. Tổng đài hỗ trợ: 19001221 - Email: cskh@hotro.shopee.vn</div>
+        <div class="_1c2Tz5">Chịu Trách Nhiệm Quản Lý Nội Dung: Nguyễn Đức Trí -  Điện thoại liên hệ: 024 73081221 (ext 4678)</div>
+    </div>
+    @*Script Chạy nivoslider*@
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('#slider').nivoSlider({
+                controlNav: false,
+                nextText: '',
+                prevText: ''
+            });
+        });
+    </script>
+
+</body>
+</html>
+

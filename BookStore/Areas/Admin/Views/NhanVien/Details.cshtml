@@ -1,0 +1,75 @@
+﻿@model BookStore.Models.NhanVien
+
+@{
+    ViewBag.Title = "Xem Chi Tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Xem Chi Tiết</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MatKhauNV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MatKhauNV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenNhanVien)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenNhanVien)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgaySinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgaySinh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GioiTinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GioiTinh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoDienThoai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoDienThoai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QueQuan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QueQuan)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.TaiKhoanNV }) |
+    @Html.ActionLink("Trở lại", "Index")
+</p>

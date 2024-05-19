@@ -1,0 +1,87 @@
+﻿@using BookStore.Models
+@model List<DonHang>
+@{
+    ViewBag.Title = "Đơn Hàng Của Bạn";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+
+
+
+@{IEnumerable<ChiTietDonHang> lstChiTietDH = (IEnumerable<ChiTietDonHang>)ViewBag.lstchitietDH;}
+
+
+
+<div class="container" style="float:right">
+    <!-- Nav pills -->
+    <ul class="nav nav-pills" role="tablist" style="text-align:center">
+        <li class="nav-item">
+            <a class="nav-link active" href="/NguoiDung/GioHang/XemGioHangSauKhiMua">Tất Cả</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Admin/DonHang/XuLyDonHang">Chờ Thanh Toán</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Admin/DonHang/ChoLayHang">Chờ Lấy Hàng</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Admin/DonHang/DangGiao">Đang Giao</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Admin/DonHang/DaGiao">Đã Giao</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Admin/DonHang/DaHuy">Đã Hủy</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<br>
+
+
+
+
+@*hiển thị sản phẩm*@
+@foreach (var item in Model)
+{
+
+    <div style="background-color:#f5f2ed;border-radius:20px 9px 9px 9px">
+        <div id="products">
+            <div style="height:50px;background-color:#f5e4c6;border-radius:20px 10px 0px 0px;">
+                <div class="compare-total"> <h4> Nhà Sách Kim Đồng</h4></div>
+                <div class="pagination-right" style="margin-right:10px">
+                    <div class="show-wrapper">
+                        <div>
+                            <h4>Đã giao</h4>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="row cat_prod">
+                <div class="product-layout product-list col-xs-12">
+                    <div class="product-block product-thumb" style="background-color:#f5f2ed">
+
+                        @Html.Action("XemChiTietPartialView", "GioHang")
+
+                    </div>
+                    <div>
+                        <div>
+                            <h2 style="text-align:right;margin-right:20px">
+                                Tổng Tiền: 2.000.000 vnđ
+                            </h2>
+                        </div>
+                        <div class="button-addtocart" style="float:right;margin-right:20px">
+                            <button type="button" class="addtocart" onclick="cart.add('43 ');"><span>Xem Chi Tiết</span></button>
+                            <button type="button" class="addtocart" onclick="cart.add('44 ');"><span>Xem Thông Tin</span></button>
+                            <button type="button" class="addtocart">
+
+                                @Html.ActionLink("Xem Chi Tiết", "XemChiTiet", "GioHang", new { @id = item.MaDonHang }, new { })
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

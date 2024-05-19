@@ -1,0 +1,145 @@
+﻿div#ToanTrang {
+    position:relative;
+    font-family:'Segoe UI';
+    font-weight:bold;
+}
+.DangKyDangNhap {
+    float:right;
+     margin-top:-1%;
+}
+.DangKyDangNhap a:hover {
+    text-decoration:none;
+    color:green;
+}
+.icDienThoai {
+      float:left;
+    margin-top:-1%;
+  
+}
+/*css divDanhMuc*/
+#divDanhMuc {
+height:30px;
+
+}
+/*css cho menu header*/
+.navMenu {
+    float:right;
+    margin-right:10%;
+}
+.navMenu li{
+    display:inline;
+    border-right:solid 1px rgba(0,0,0,.1);
+    padding:20px;
+    padding-top:22px;
+    padding-bottom:25px;
+     -webkit-transition:all .5s ease-out;
+    -moz-transition:all .5s ease-out;
+    -ms-transition:all .5s ease-out;
+}
+/*Css hover thay đổi màu chậm*/
+.navMenu li:hover{
+    background-color:rgba(0,0,0,.5);
+    -webkit-transition:all .5s ease-out;
+    -moz-transition:all .5s ease-out;
+    -ms-transition:all .5s ease-out;
+}
+.navMenu a:hover {
+    text-decoration:none;
+}
+/*css divTimKiem*/
+#txtTimKiem {
+    float:left;
+    margin-left:5%;
+}
+#txtTimKiem input{
+     height:0px; 
+}
+/*css image button hình ảnh tìm kiếm*/
+#divHinhAnhTimKiem button {
+  margin-right:-70px;
+   padding:10px 20px 5px 20px;
+   background-color:#14a19a;
+}
+#divHinhAnhTimKiem button:hover {
+    
+    background-color:rgba(0,0,0,.5);
+    -webkit-transition:all .5s ease-out;
+    -moz-transition:all .5s ease-out;
+    -ms-transition:all .5s ease-out;
+}
+#divHinhAnhTimKiem img {
+    width:50px;
+    height:50px;
+
+}
+/*Css cho nivoslider */
+#slider {
+    float:left;
+    width:70%;
+ 
+}
+#slider img{
+        width:850px;
+         height:360px;
+}
+
+#divMenuLeft{
+     float:left;
+      width:30%;
+
+}
+#divLeft{
+    width:30%;
+     float:left;
+
+}
+
+#divRight{
+    width:60%;
+     float:right;
+}
+
+#divLeft .item{
+    width:100%;    
+}
+#divRight {
+      float:right;
+      width:66%;
+}
+/*css footer*/
+div#footer {
+	border-top: 1px solid #a3a2a2;
+	clear: both;
+	margin-top: 40px;
+	padding: 10px;
+}
+
+div#footer div.fLeft {
+	float: left;
+	width: 340px;
+}
+
+div#footer div.fRight {
+	float: right;
+	width: 530px;
+}
+
+div#footer div.fRight ul {
+	margin-bottom: 10px;
+    text-align: right;
+}
+
+div#footer div.fRight ul li {
+    display: inline;
+    border-right: solid 1px #333;
+    padding: 0 5px;
+}
+
+div#footer div.fRight ul li.last {
+    border-right: none;
+    padding-right: 0;
+}
+
+div#footer div.fRight p {
+	text-align: right;
+}

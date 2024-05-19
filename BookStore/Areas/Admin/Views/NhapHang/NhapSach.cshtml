@@ -1,0 +1,198 @@
+﻿@using BookStore.Models;
+@model  List<PhieuNhap>
+@{
+    ViewBag.Title = "Nhập Sách";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@{
+
+    IEnumerable<NhanVien> lstNV = ViewBag.TaiKhoanNV as IEnumerable<NhanVien>;
+}
+@*Bước 1: sử dụng control date time picker chèn 3 file script*@
+
+
+@using (Html.BeginForm())
+{
+    // Phần Phiếu Nhập
+    <div class="row">
+        @*<div class="ThongTinPhieuNhap col-md-12">
+                <div class="col col-2" style="float:left">
+                    Nhà Cung Cấp:
+                </div>
+                <div class="col col-5">
+                    <select class="MaNhaCungCap" name="MaNhaCungCap">
+                        @foreach (var item in lstNCC)
+                        {
+                            <option value="@item.MaNhaCungCap">@item.TenNhaCungCap</option>
+                        }
+
+                    </select>
+                </div> <br>
+            </div>*@
+
+        <div class="clearfix"> </div>
+        <br>
+        <div class="col col-md-12">
+            @*Ngày Nhập*@
+            <div class="col col-2" style="float:left">
+                Nhân Viên:
+            </div>
+            <div class="col col-5">
+                <select class="TaiKhoanNV" name="TaiKhoanNV">
+                    @foreach (var item in lstNV)
+                    {
+                        <option value="@item.TaiKhoanNV">@item.TenNhanVien</option>
+                    }
+
+                </select>
+                @*Chọn Nhà Cung Cấp*@
+                @*@Html.DropDownList("MaNhaCungCap", null, new { @class = "form-control" })*@
+            </div><br>
+        </div>
+
+
+
+        <div class="col col-md-12">
+            @*Ngày Nhập*@
+            <div class="col col-2" style="float:left">
+                Ngày Nhập:
+            </div>
+            <div class="col col-5">
+                <input @*name="NgayNhap"*@ name="NgayNhapKho" class="date" />
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+    <br />
+
+    //Phần Chi Tiết Nhập Hàng
+    <table class="table ChiTietPhieuNhap">
+        @{ IEnumerable<Sach> lstSach = ViewBag.LstSanh as IEnumerable<Sach>;}
+        <tr class="trAppend" style="display:none">
+            <td>
+                <select class="ddlSanPham" name="">
+                    @foreach (var item in lstSach)
+                    {
+                        <option value="@item.MaSach">@item.TenSach</option>
+                    }
+                </select>
+            </td>
+            <td>
+                <input name="" class="txtGiaSachNhap" @*value="0"*@>
+            </td>
+            <td>
+                <input name="" class="txtSoLuongSachNhap" @*value="0"*@>
+            </td>
+            <td>
+                <input class="btnDelete btn btn-danger" style="width:30px;height:30px" value="-">
+            </td>
+        </tr>
+
+        <tr class="trFirstChild" data-id="-1">
+            <td>Sách</td>
+            <td>Giá Sách Nhập</td>
+            <td>Số Lượng</td>
+            <td></td>
+        </tr>
+    </table>
+
+    // Nút button thêm
+    <input type="button" value="+" class="btn btn-success" id="btnAdd">
+    <input type="submit" value="Nhập Hàng" class="btn btn-primary" id="btnNhapHang">
+
+}
+<script>
+    $("#btnAdd").click(function () {
+        // lấy id của tr cuối cùng thuộc thẻ table có class = ChiTietphieuNhap
+        // Bước 4: Phương thức find là tìm đến thẻ nào đó: ở đây là thẻ tr (:last-child) là thẻ cuối cùng trong thẻ tblChiTietPhieuNhap
+        var id_cuoi = $(".ChiTietPhieuNhap").find("tr:last-child").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+        // Bước 1:Nội dung phía trong thẻ trAppend
+        var tdnoidung = $(".trAppend").html();
+        // Bước 2: Tạo 1 thẻ tr bao ngoài nội dung
+        var trnoidung = "<tr class=\"trAppended\" data-id=\"" + i + "\">" + tdnoidung + "</tr>";
+        // Bước 3: Lấy thẻ table append vào 1 tr
+        $(".ChiTietPhieuNhap").append(trnoidung);
+        loadIDLENTHE();
+    });
+
+    // Phương thức sử lý lấy thuộc tính attr từ thẻ tr gắn xuống chỉ xố phần tử các trong thuộc tính name của thẻ input
+    function loadIDLENTHE() {
+        $(".trAppended").each(function () {
+            var id = $(this).attr("data-id");
+            //var nameMaPhieuNhap = "[" + id + "].MaSach";
+            var nameMaSach = "[" + id + "].MaSach"; // tạo ra mã sp
+            var nameSoLuongSachNhap = "[" + id + "].SoLuongSachNhap"; // tạo ra số lượng nhập
+            var nameGiaSachNhap = "[" + id + "].GiaSachNhap"; // tạo ra đơn giá nhập
+            $(this).find(".ddlSanPham").attr("name", nameMaSach); // gán name cho dropdowlist
+            $(this).find(".txtGiaSachNhap").attr("name", nameGiaSachNhap); // gan don gia nhap
+            $(this).find(".txtSoLuongSachNhap").attr("name", nameSoLuongSachNhap); // gan so luong nhap sach
+        });
+    }
+    // sử lý sự kiện xóa 1 dòng từ nút delete nằm bên trong thẻ tr
+    $("body").on("click", ".btnDelete", function () {
+        // Xóa phần tử cha phía ngoài
+        $(this).closest(".trAppended").remove();
+        CapNhatID();
+    });
+
+    function CapNhatID() {
+        //Lấy lại tr 1
+        var id_cuoi = $(".ChiTietPhieuNhap").find(".trFirstChild").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+
+        $(".trAppended").each(function () {
+            var id = i;
+            $(this).attr("data-id", i)
+            // cập nhật lại id (tr) khi xóa
+            var nameMaSach = "[" + id + "].MaSach"; // tạo ra mã sp
+            var nameSoLuongSachNhap = "[" + id + "].SoLuongSachNhap"; // tạo ra số lượng nhập
+            var nameGiaSachNhap = "[" + id + "].GiaSachNhap"; // tạo ra đơn giá nhập
+            $(this).find(".ddlSanPham").attr("name", nameMaSach); // gán name cho dropdowlist
+            $(this).find(".txtGiaSachNhap").attr("name", nameGiaSachNhap); // gan don gia nhap
+            $(this).find(".txtSoLuongSachNhap").attr("name", nameSoLuongSachNhap); // gan so luong nhap sach
+            i++;
+        });
+    }
+    $("#btnNhapHang").click(function () {
+        if (KiemtraDonGia() == false) {
+            //nếu tồn tại 1 giá trị bất kì thuộc class đơn giá thì ngăn k cho submit ve server
+
+            return false;
+        }
+        if (KiemTraSoLuong() == false) {
+            return false;
+        }
+    })
+    // kiểm tra đơn giá
+    function KiemtraDonGia() {
+        var bl = true;
+        // duyệt vòng lặp each
+        $(".txtGiaSachNhap").each(function () {
+            var giatri = $(this).val();
+            if (isNaN(giatri) == true) {
+                alert("Đơn giá không hợp lệ !");
+                bl = false;
+                return bl;
+            }
+        });
+        return bl;
+    }
+    // kiểm tra Số lượng
+    function KiemTraSoLuong() {
+        var bl = true;
+        // duyệt vòng lặp each
+        $(".txtSoLuongSachNhap").each(function () {
+            var giatri = $(this).val();
+            if (isNaN(giatri) == true) {
+                alert("Số lượng không hợp lệ !");
+                bl = false;
+                return bl;
+            }
+        });
+        return bl;
+    }
+</script>
+
+

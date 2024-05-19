@@ -1,0 +1,26 @@
+﻿@using BookStore.Models;
+@*Định nghĩa kiểu du liệu cho Medol*@
+@model IEnumerable<BookStore.Models.Sach>
+<h1 class="item-header">Sách mới</h1>
+@{
+    foreach (var item in Model)
+    {
+        <div class="activity-list-update">
+            <img src="@Url.Content("~/Assets/HinhAnhSP/"+item.AnhBia)" width="50" height="50" alt="Image">
+            @*Nếu tên sách dài hơn 30 ký tự thì lấy từ đầu đén 30*@
+            @if (item.TenSach.Length > 30)
+            {
+                <p><strong title="@item.TenSach">Tiêu đề: @item.TenSach.Substring(0, 25)...</strong><br /><a href="@Url.Action("XemChiTiet", new { @masach=item.MaSach })">Xem chi tiết</a></p>
+            }
+            else
+            {
+                <p><strong title="@item.TenSach">Tiêu đề: @item.TenSach</strong><br /><a href="@Url.Action("XemChiTiet", new { @masach=item.MaSach })">Xem chi tiết</a></p>
+                <div class="clear"></div>
+            }
+        </div>
+    }
+}
+<a href="#" class="item-footer green">
+    Sách loại mới nhất
+</a>
+

@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Thống Kê";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<head>
+    <style type="text/css">
+
+      
+    </style>
+
+
+
+</head>
+
+@using (Html.BeginForm("Index", "ThongKe"))
+{
+    <div class="form-group">
+        @*<label style="float:left" class="" for="input-postcode">Tháng: </label>*@
+        <div class="col-sm-2" style="float:left">
+            <input type="text" name="Ngay" value="" placeholder="Ngày" id="input-postcode" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
+        @*<label style="float:left" class="" for="input-postcode">Tháng: </label>*@
+        <div class="col-sm-2" style="float:left">
+            <input type="text" name="Thang" value="" placeholder="Tháng" id="input-postcode" class="form-control">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @*<label class="col-sm-3 control-label" for="input-postcode">Năm: </label>*@
+        <div class="col-sm-2" style="float:left">
+            <input type="text" name="Nam" value="" placeholder="Năm" id="input-postcode" class="form-control">
+        </div>
+    </div>
+    <div class="pull-right">
+        <button type="submit" class="btn btn-default">Xem doanh thu Tháng</button>
+    </div>
+
+}
+<br />
+<br />
+<hr />
+
+
+<div class="col col-5" style="float:left">
+    <table>
+        <tr>
+            <th width="30%">Doanh Thu</th>
+            <th width="20%">Kết Quả</th>
+        </tr>
+        <tr>
+
+            <td>Doanh thu Tháng</td>
+            <td> @ViewBag.DoanhThuThangNam</td>
+            @*<td><a style="color:red">@string.Format("{0:0,#}", ViewBag.DoanhThuThangNam)</a> vnđ</td>*@
+        </tr>
+
+        <tr>
+            <td>Doanh Thu Ngày</td>
+            <td>@ViewBag.DoanhThuNgayThangNam</td>
+            @*<td><a style="color:red">@string.Format("{0:0,#}", ViewBag.DoanhThuNgayThangNam)</a> vnđ</td>*@
+        </tr>
+
+    </table>
+    <br>
+    <table>
+        <tr>
+            <th width="30%">Thống Kê</th>
+            <th width="20%">Kết Quả</th>
+        </tr>
+        <tr>
+            <td>Thành Viên Hiện Tại</td>
+            <td>@ViewBag.ThongKeThanhVien Thành Viên</td>
+        </tr>
+    
+    </table>
+    <br />
+</div>
+<div class="col col-7" style="float:left">
+
+    <table>
+        <tr>
+            <th width="20%">Thống Kê</th>
+            <th width="20%">Kết Quả</th>
+            <th width="10%">Thao Tác</th>
+        </tr>
+
+        <tr>
+            <td>Đơn Hàng Đang Đang Xử Lý </td>
+            <td>@ViewBag.ThongKeDonHangDangDuyet</td>
+            <td>@Html.ActionLink("Xem chi tết","XacNhan", "QuanLyDonHang")</td>
+        </tr>
+        <tr>
+            <td>Đơn Hàng Đang Giao </td>
+            <td>@ViewBag.ThongKeDonHangDangGiao</td>
+        </tr>
+        <tr>
+            <td>Đơn Hàng Đã giao </td>
+            <td>@ViewBag.ThongKeDonHangDaGiao</td>
+        </tr>
+        <tr>
+            <td>Đơn Hàng Đã Hủy </td>
+            <td>@ViewBag.ThongKeDonHangDaHuy</td>
+        </tr>
+        <tr>
+            <td>Tổng Đơn</td>
+            <td>@ViewBag.ThongKeDonHang</td>
+        </tr>
+        <tr style="color:red">
+            <td>Tổng Tiền Tất Cả Đơn Hàng</td>
+            <td>@string.Format("{0:0,#}", ViewBag.DoanhThuAll) vnđ</td>
+        </tr>
+    </table>
+
+</div>
